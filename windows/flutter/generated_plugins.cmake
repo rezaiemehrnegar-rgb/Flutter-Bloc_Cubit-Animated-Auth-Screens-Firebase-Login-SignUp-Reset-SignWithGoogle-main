@@ -6,7 +6,7 @@ list(APPEND FLUTTER_PLUGIN_LIST
   connectivity_plus
   firebase_auth
   firebase_core
-  rive_common
+  rive_native
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
