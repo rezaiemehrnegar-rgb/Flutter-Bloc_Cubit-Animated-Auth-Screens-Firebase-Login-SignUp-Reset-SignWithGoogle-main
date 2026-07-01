@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
-
 import '../../../core/widgets/already_have_account_text.dart';
 import '../../../core/widgets/progress_indicaror.dart';
 import '../../../core/widgets/terms_and_conditions_text.dart';

@@ -1,11 +1,11 @@
+// ignore_for_file: strict_top_level_inference
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:rive/rive.dart';
-
 import '../../../helpers/app_regex.dart';
 import '../../../routing/routes.dart';
 import '../../../theming/styles.dart';
@@ -47,7 +47,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
 
   final formKey = GlobalKey<FormState>();
 
-  final RiveAnimationControllerHelper riveHelper =
+  late final RiveAnimationControllerHelper riveHelper =
       RiveAnimationControllerHelper();
 
   final passwordFocuseNode = FocusNode();
@@ -62,7 +62,7 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
           SizedBox(
             height: MediaQuery.of(context).size.height / 5,
             child: riveHelper.riveArtboard != null
-                ? Rive(
+                ? RiveAnimation(
                     fit: BoxFit.cover,
                     artboard: riveHelper.riveArtboard!,
                   )
@@ -259,11 +259,21 @@ class _EmailAndPasswordState extends State<EmailAndPassword> {
         passwordFocuseNode.unfocus();
         passwordConfirmationFocuseNode.unfocus();
         if (formKey.currentState!.validate()) {
+          final googleUser = widget.googleUser;
+          final credential = widget.credential;
+
+          if (googleUser == null ||
+              credential == null ||
+              googleUser.email.isEmpty) {
+            riveHelper.addFailController();
+            return;
+          }
+
           context.read<AuthCubit>().createAccountAndLinkItWithGoogleAccount(
-                nameController.text,
+                googleUser.email,
                 passwordController.text,
-                widget.googleUser!,
-                widget.credential!,
+                googleUser,
+                credential,
               );
         }
       },

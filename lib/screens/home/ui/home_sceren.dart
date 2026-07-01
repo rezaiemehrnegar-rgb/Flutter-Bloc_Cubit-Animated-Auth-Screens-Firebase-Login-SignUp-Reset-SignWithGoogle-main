@@ -30,10 +30,11 @@ class _HomeScreenState extends State<HomeScreen> {
       body: OfflineBuilder(
         connectivityBuilder: (
           BuildContext context,
-          ConnectivityResult connectivity,
+          List<ConnectivityResult> connectivity,
           Widget child,
         ) {
-          final bool connected = connectivity != ConnectivityResult.none;
+          final bool connected = connectivity.isNotEmpty &&
+              connectivity.any((result) => result != ConnectivityResult.none);
           return connected ? _homePage(context) : const BuildNoInternet();
         },
         child: const Center(
@@ -103,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     textStyle: TextStyles.font15DarkBlue500Weight,
                     onPressed: () {
                       try {
-                        GoogleSignIn().disconnect();
+                        GoogleSignIn.instance.disconnect();
                       } finally {
                         context.read<AuthCubit>().signOut();
                       }

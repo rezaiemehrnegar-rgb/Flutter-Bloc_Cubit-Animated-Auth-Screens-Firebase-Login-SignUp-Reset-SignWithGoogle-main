@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../helpers/extensions.dart';
 import '../../../../routing/routes.dart';
 import '../../../../theming/styles.dart';

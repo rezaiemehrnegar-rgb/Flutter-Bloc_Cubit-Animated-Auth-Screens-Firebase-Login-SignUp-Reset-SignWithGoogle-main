@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import '../../theming/colors.dart';
 
 class ProgressIndicaror {
-  static showProgressIndicator(BuildContext context) {
+  static Future<dynamic> showProgressIndicator(BuildContext context) {
     return showDialog(
       context: context,
       barrierDismissible: false,

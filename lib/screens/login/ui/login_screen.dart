@@ -5,7 +5,6 @@ import 'package:flutter_offline/flutter_offline.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
-
 import '../../../core/widgets/login_and_signup_animated_form.dart';
 import '../../../core/widgets/no_internet.dart';
 import '../../../core/widgets/progress_indicaror.dart';
@@ -35,10 +34,11 @@ class _LoginScreenState extends State<LoginScreen> {
       body: OfflineBuilder(
         connectivityBuilder: (
           BuildContext context,
-          ConnectivityResult connectivity,
+          List<ConnectivityResult> connectivity,
           Widget child,
         ) {
-          final bool connected = connectivity != ConnectivityResult.none;
+          final bool connected = connectivity.isNotEmpty &&
+              connectivity.any((result) => result != ConnectivityResult.none);
           return connected ? _loginPage(context) : const BuildNoInternet();
         },
         child: const Center(

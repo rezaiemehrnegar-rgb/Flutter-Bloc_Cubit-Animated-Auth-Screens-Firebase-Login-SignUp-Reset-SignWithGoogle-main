@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../theming/colors.dart';
 
 class AppTextButton extends StatelessWidget {
@@ -14,17 +13,18 @@ class AppTextButton extends StatelessWidget {
   final TextStyle textStyle;
   final VoidCallback onPressed;
 
-  const AppTextButton(
-      {super.key,
-      this.borderRadius,
-      this.backgroundColor,
-      this.horizontalPadding,
-      this.verticalPadding,
-      this.buttonWidth,
-      this.buttonHeight,
-      required this.buttonText,
-      required this.textStyle,
-      required this.onPressed});
+  const AppTextButton({
+    super.key,
+    this.borderRadius,
+    this.backgroundColor,
+    this.horizontalPadding,
+    this.verticalPadding,
+    this.buttonWidth,
+    this.buttonHeight,
+    required this.buttonText,
+    required this.textStyle,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {

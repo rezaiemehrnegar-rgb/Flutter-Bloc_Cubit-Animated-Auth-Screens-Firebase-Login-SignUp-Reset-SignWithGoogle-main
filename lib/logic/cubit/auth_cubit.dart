@@ -19,7 +19,7 @@ class AuthCubit extends Cubit<AuthState> {
 
     try {
       await _auth.createUserWithEmailAndPassword(
-        email: googleUser.email,
+        email: email,
         password: password,
       );
       await _auth.currentUser!.linkWithCredential(credential);
@@ -63,21 +63,21 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> signInWithGoogle() async {
     emit(AuthLoading());
     try {
-      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-      if (googleUser == null) {
-        emit(AuthError('Google Sign In Failed'));
+      final GoogleSignInAccount googleUser =
+          await GoogleSignIn.instance.authenticate();
+      // Obtain the auth details from the request
+      final GoogleSignInAuthentication googleAuth = googleUser.authentication;
+      if (googleAuth.idToken == null) {
+        emit(AuthError('Google ID token is unavailable.'));
         return;
       }
-      // Obtain the auth details from the request
-      final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
       // Create a new credential
       final credential = GoogleAuthProvider.credential(
-        accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
-      final UserCredential authResult =
-          await _auth.signInWithCredential(credential);
+      final UserCredential authResult = await _auth.signInWithCredential(
+        credential,
+      );
       if (authResult.additionalUserInfo!.isNewUser) {
         // Delete the user account if it is a new user to Create it automatically in Next Screen
         await _auth.currentUser!.delete();
